@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int main() {
+    int n;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    // Arguments array: command + arguments + NULL terminator
+    char *args[n + 2];
+    args[0] = "./2Bchild"; // Path to the child program
+    args[n + 1] = NULL;    // Null-terminate the arguments array
+
+    printf("Enter the elements of the array:\n");
+    for (int i = 1; i <= n; i++) {
+        args[i] = (char *)malloc(10 * sizeof(char)); // Allocate memory for each argument
+        scanf("%s", args[i]);
+    }
+
+    pid_t pid = fork();
+    if (pid < 0) {
+        perror("Fork failed");
+        exit(EXIT_FAILURE);
+    }
+    if (pid == 0) { // Child process
+        execve(args[0], args, NULL); // Execute child process
+        perror("Execve failed"); // Error if execve fails
+        exit(EXIT_FAILURE);
+    } else { // Parent process
+        wait(NULL); // Wait for child to complete
+        printf("Parent process: Child process has completed.\n");
+        for (int i = 1; i <= n; i++) { // Free allocated memory
+            free(args[i]);
+        }
+    }
+    return 0;
+}
+
+
+
+
+
+
+to run program command 
+gcc -o 2Bparent 2Bparent.c   or  cc -o 2Bparent 2Bparent.c
+gcc -o 2Bchild 2Bchild.c         cc -o 2Bchild 2Bchild.c
+./2Bparent                       ./2Bparent
+
+
+
+
+
+child part from here
+
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+    printf("Array in reverse order:\n");
+    for (int i = argc - 1; i > 0; i--) {
+        printf("%s ", argv[i]);
+    }
+    printf("\n");
+    return 0;
+}
+
+
+
+
+

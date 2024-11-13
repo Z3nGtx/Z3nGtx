@@ -1,0 +1,196 @@
+Assignment No: 03 Code:
+Microsoft Windows [Version 10.0.19045.4894]
+
+(c) Microsoft Corporation. All rights reserved.
+
+
+C:\Users\Admin>mongosh
+Current Mongosh Log ID: 670fe19d8637b39f0dc73bf7 Connecting to:
+mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName
+= mongosh+2.3.1
+Using MongoDB:	7.0.12
+Using Mongosh:	2.3.1
+
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+------
+
+The server generated these startup warnings when booting
+
+2024-10-15T22:13:41.288+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+
+------
+test> use practical3; switched to db practical3
+practical3> db.createCollection('Student');
+
+{ ok: 1 }
+ 
+practical3> db.Student.insert({name:'Swarangi',subject:'ADBMS',marks:80}); DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fe39d8637b39f0dc73bf8') }
+
+}
+
+practical3> db.Student.insert({name:'Swarangi',subject:'OS',marks:90});
+
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fe3ab8637b39f0dc73bf9') }
+
+}
+
+practical3> db.Student.insert({name:'Swarangi',subject:'TOC',marks:87});
+
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fe3b78637b39f0dc73bfa') }
+
+}
+
+practical3> db.Student.insert({name:'Purva',subject:'ADBMS',marks:70});
+
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fe41c8637b39f0dc73bfb') }
+
+}
+
+practical3> db.Student.insert({name:'Purva',subject:'OS',marks:99});
+{
+ 
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fe4288637b39f0dc73bfc') }
+
+}
+
+practical3> db.Student.insert({name:'Purva',subject:'TOC',marks:88});
+
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fe4588637b39f0dc73bfd') }
+
+}
+
+practical3> db.Student.insert({name:'Chandni',subject:'ADBMS',marks:90});
+
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fe4738637b39f0dc73bfe') }
+
+}
+
+practical3> db.Student.insert({name:'Chandni',subject:'OS',marks:75});
+
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fe49b8637b39f0dc73bff') }
+
+}
+
+practical3> db.Student.insert({name:'Chandni',subject:'TOC',marks:82});
+
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fe4db8637b39f0dc73c00') }
+
+}
+ 
+practical3> db.Student.find().pretty();
+[
+{
+
+_id: ObjectId('670fe39d8637b39f0dc73bf8'), name: 'Swarangi', subject: 'ADBMS', marks: 80
+},
+
+{
+
+_id: ObjectId('670fe3ab8637b39f0dc73bf9'), name: 'Swarangi', subject: 'OS', marks: 90
+},
+
+{
+
+_id: ObjectId('670fe3b78637b39f0dc73bfa'), name: 'Swarangi', subject: 'TOC', marks: 87
+},
+
+{
+
+_id: ObjectId('670fe41c8637b39f0dc73bfb'), name: 'Purva', subject: 'ADBMS', marks: 70
+},
+
+{
+_id: ObjectId('670fe4288637b39f0dc73bfc'), name: 'Purva', subject: 'OS', marks:
+99
+ 
+},
+
+{
+
+_id: ObjectId('670fe4588637b39f0dc73bfd'), name: 'Purva', subject: 'TOC', marks: 88
+},
+
+{
+
+_id: ObjectId('670fe4738637b39f0dc73bfe'), name: 'Chandni', subject: 'ADBMS', marks: 90
+},
+
+{
+
+_id: ObjectId('670fe49b8637b39f0dc73bff'), name: 'Chandni', subject: 'OS', marks: 75
+},
+
+{
+
+_id: ObjectId('670fe4db8637b39f0dc73c00'), name: 'Chandni', subject: 'TOC',
+marks: 82
+
+}
+
+]
+
+practical3> var map=function(){emit(this.name,this.marks)};
+
+
+practical3> var reduce = function(name,marks){return Array.sum(marks)};
+ 
+practical3> db.Student.mapReduce(map,reduce,{out:"total"});
+
+{
+
+"result":"total, "timeMillis":593, "counts":{
+"input:9,"
+
+}
+
+}
+
+result: 'total', ok: 1 } practical3> db.total.find();
+[
+{ _id: 'Purva', value: 257 },
+
+{ _id: 'Chandni', value: 247 },
+
+{ _id: 'Swarangi', value: 257 }
+
+]
+
+practical3>

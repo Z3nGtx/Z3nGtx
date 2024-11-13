@@ -1,0 +1,83 @@
+# Assignment 3 : Classification technique
+# Problem Statement: Every year many students give the GRE exam to get
+admission in foreign Universities. The data
+# set contains GRE Scores (out of 340), TOEFL Scores (out of 120), University Rating (out of 5)
+# Undergraduate GPA (out of 10), Research Experience (0=no, 1=yes), Admitted (0=no, 1=yes).
+# Admitted is the target variable (i.e. class column) .
+# Data Set Available on kaggle (The last column of the dataset needs to be changed to 0 or 1
+# Data Set : https://www.kaggle.com/mohansacharya/graduate-admissions
+# The counselor of the firm is supposed check whether the student will get an admission or not
+# based on his/her GRE score and Academic Score. So to help the counselor to take appropriate
+# decisions build a machine learning model classifier using Decision tree to predict whether a
+# student will get admission or not.
+# Apply Data pre-processing (Label Encoding, Data Transformation….)
+techniques ifnecessary.
+# Perform data-preparation (Train-Test Split) # Evaluate Model.
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score, classification_report
+import sklearn.tree as tr
+
+# Load dataset
+data = pd.read_csv("Admission_Predict.csv")
+
+# Display first 5 rows and shape of the dataset
+print(data.head())
+print("Data Shape:", data.shape)
+
+# Display columns in the dataframe
+print("Columns:", data.columns)
+
+# Dropping 'Serial No.' column as it is not informative for classification
+data.drop("Serial No.", axis=1, inplace=True)
+
+# Convert the "Chance of Admit" to a binary class (0 or 1)
+data["Chance of Admit "] = data["Chance of Admit "].apply(lambda x: 1 if x > 0.5 else 0)
+
+# Check for missing values
+print("Missing values:\n", data.isnull().sum())
+
+# Calculate total class count
+data_admit = data[data["Chance of Admit "] == 1]
+data_non_admit = data[data["Chance of Admit "] == 0]
+print("Admitted count:", data_admit.shape[0])
+print("Non-Admitted count:", data_non_admit.shape[0])
+
+# Splitting the dataset into dependent and independent variables
+X = data.drop("Chance of Admit ", axis=1)
+y = data["Chance of Admit "]
+
+# Splitting the dataset into train and test sets (80-20 split)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Display the shape of train and test sets
+print("Train Set Shape (X, y):", X_train.shape, y_train.shape)
+print("Test Set Shape (X, y):", X_test.shape, y_test.shape)
+
+# Initialize the Decision Tree Classifier
+tree = DecisionTreeClassifier()
+
+# Train the model
+tree.fit(X_train, y_train)
+
+# Predicting the target values
+y_train_tree = tree.predict(X_train)
+y_test_tree = tree.predict(X_test)
+
+# Compute the accuracy of the model on the test data
+acc_test_tree = accuracy_score(y_test, y_test_tree)
+print("Decision Tree: Accuracy on Test Data: {:.3f}".format(acc_test_tree))
+
+# Display the classification report
+print("Classification Report:\n", classification_report(y_test, y_test_tree))
+
+# Visualization of the Decision Tree
+fig = plt.figure(figsize=(20, 15))
+_ = tr.plot_tree(tree, feature_names=X.columns, class_names=np.array(["Non admit", "Admit"]), filled=True)
+plt.show()
+

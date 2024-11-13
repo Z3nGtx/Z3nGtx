@@ -1,0 +1,447 @@
+Assignment No: 01 Code:
+Microsoft Windows [Version 10.0.19045.4894]
+
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Admin>mongosh
+Current Mongosh Log ID: 670fbd46ea0e8a5534c73bf7 Connecting to:
+mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName
+=
+mongosh+2.3.1
+Using MongoDB:	7.0.12
+Using Mongosh:	2.3.1
+
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+------
+
+The server generated these startup warnings when booting
+
+2024-10-15T22:13:41.288+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+
+------
+
+test> use practical1 switched to db practical1
+practical1> db.createCollection("Account");
+ 
+{ ok: 1 }
+
+practical1> db.Account.insert({Acc_no:'10123',Cust_id:'101',Branch_id:'cent10',Balance:'89332'});
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fbe9aea0e8a5534c73bf8') }
+
+}
+
+practical1> db.Account.insert({Acc_no:'45673',Cust_id:'102',Branch_id:'state67',Balance:'779332'});
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fbedeea0e8a5534c73bf9') }
+
+}
+
+practical1> db.Account.insert({Acc_no:'96833',Cust_id:'103',Branch_id:'Badoda99',Balance:'99433400'});
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fc40fea0e8a5534c73bfa') }
+
+}
+
+practical1> db.Account.insert({Acc_no:'75449',Cust_id:'104',Branch_id:'ICICI444',Balance:'100000'});
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fc443ea0e8a5534c73bfb') }
+
+}
+ 
+practical1> db.Account.insert({Acc_no:'85833',Cust_id:'105',Branch_id:'Maharashtra76',Balance:'990000'});
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fc469ea0e8a5534c73bfc') }
+
+}
+practical1> db.Account.find().pretty();
+[
+{
+
+_id: ObjectId('670fbe9aea0e8a5534c73bf8'), Acc_no: '10123',
+Cust_id: '101', Branch_id: 'cent10', Balance: '89332'
+},
+
+{
+
+_id: ObjectId('670fbedeea0e8a5534c73bf9'), Acc_no: '45673',
+Cust_id: '102', Branch_id: 'state67', Balance: '779332'
+},
+
+{
+
+_id: ObjectId('670fc40fea0e8a5534c73bfa'), Acc_no: '96833',
+Cust_id: '103',
+ 
+Branch_id: 'Badoda99', Balance: '99433400'
+},
+
+{
+_id: ObjectId('670fc443ea0e8a5534c73bfb'), Acc_no: '75449',
+Cust_id: '104', Branch_id: 'ICICI444', Balance: '100000'
+},
+
+{
+
+_id: ObjectId('670fc469ea0e8a5534c73bfc'), Acc_no: '85833',
+Cust_id: '105',
+
+Branch_id: 'Maharashtra76', Balance: '990000'
+}
+
+]
+
+practical1> db.createCollection('Branch');
+{ ok: 1 } practical1>
+db.Branch.insert({Branch_id:'cent10',Branch_name:'Central',Branch_city:'Shrirampur',Asset:'10
+000000'});
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fc535ea0e8a5534c73bfd') }
+ 
+}
+
+practical1> db.Branch.insert({Branch_id:'state67',Branch_name:'State',Branch_city:'Nagar',Asset:'889000000 '});
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fc57dea0e8a5534c73bfe') }
+
+}
+practical1> db.Branch.insert({Branch_id:'Badoda99',Branch_name:'Badoda',Branch_city:'Nashik',Asset:'999 0 00000'});
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fc5b0ea0e8a5534c73bff') }
+
+}
+
+practical1> db.Branch.insert({Branch_id:'ICICI44',Branch_name:'ICICI',Branch_city:'Nashik',Asset:'199000 000'});
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fc5dbea0e8a5534c73c00') }
+
+}
+
+practical1> db.Branch.insert({Branch_id:'Maharashtra76',Branch_name:'Maharashtra',Branch_city:'Mumba i',Asset:'88000000'});
+{
+
+acknowledged: true,
+ 
+insertedIds: { '0': ObjectId('670fc60dea0e8a5534c73c01') }
+
+}
+
+practical1> db.Branch.find().pretty(); [
+{
+
+_id: ObjectId('670fc535ea0e8a5534c73bfd'), Branch_id: 'cent10',
+Branch_name: 'Central', Branch_city: 'Shrirampur',
+Asset: '10000000'
+},
+
+{
+
+_id: ObjectId('670fc57dea0e8a5534c73bfe'), Branch_id: 'state67',
+Branch_name: 'State', Branch_city: 'Nagar', Asset: '889000000'
+},
+
+{
+
+_id: ObjectId('670fc5b0ea0e8a5534c73bff'), Branch_id: 'Badoda99',
+Branch_name: 'Badoda', Branch_city: 'Nashik', Asset: '999000000'
+},
+
+{
+ 
+_id: ObjectId('670fc5dbea0e8a5534c73c00'), Branch_id: 'ICICI44',
+Branch_name: 'ICICI', Branch_city: 'Nashik', Asset: '199000000'
+},
+
+{
+
+_id: ObjectId('670fc60dea0e8a5534c73c01'), Branch_id: 'Maharashtra76',
+Branch_name: 'Maharashtra', Branch_city: 'Mumbai',
+Asset: '88000000'
+}
+
+]
+
+practical1> db.createCollection('Customer');
+{ ok: 1 } practical1>
+db.Customer.insert({Cust_id:'101',Name:'Rohit',Cust_street:'Rahuri',City:'Ahilyanagar'});
+
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fc6b2ea0e8a5534c73c02') }
+
+}
+
+practical1> db.Customer.insert({Cust_id:'102',Name:'Rohan',Cust_street:'Katraj',City:'Pune'});
+
+{
+
+acknowledged: true,
+ 
+insertedIds: { '0': ObjectId('670fc6ccea0e8a5534c73c03') }
+
+}
+
+practical1> db.Customer.insert({Cust_id:'103',Name:'Arjun',Cust_street:'Devgiri',City:'Nashik'});
+
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fc6ecea0e8a5534c73c04') }
+
+}
+
+practical1> db.Customer.insert({Cust_id:'104',Name:'Dev',Cust_street:'Sinhgad',City:'Nagpur'});
+
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fc70aea0e8a5534c73c05') }
+
+}
+practical1> db.Customer.insert({Cust_id:'105',Name:'Bhushan',Cust_street:'Newasa',City:'Shirdi'});
+{
+
+acknowledged: true,
+
+insertedIds: { '0': ObjectId('670fc762ea0e8a5534c73c06') }
+
+}
+
+practical1> db.Customer.find().pretty();
+[
+{
+
+_id: ObjectId('670fc6b2ea0e8a5534c73c02'), Cust_id: '101',
+Name: 'Rohit',
+ 
+Cust_street: 'Rahuri', City: 'Ahilyanagar'
+},
+
+{
+
+_id: ObjectId('670fc6ccea0e8a5534c73c03'), Cust_id: '102',
+Name: 'Rohan', Cust_street: 'Katraj', City: 'Pune'
+},
+
+{
+
+_id: ObjectId('670fc6ecea0e8a5534c73c04'), Cust_id: '103',
+Name: 'Arjun',
+Cust_street: 'Devgiri', City: 'Nashik'
+
+},
+
+{
+
+_id: ObjectId('670fc70aea0e8a5534c73c05'), Cust_id: '104',
+Name: 'Dev', Cust_street: 'Sinhgad', City: 'Nagpur'
+},
+
+{
+ 
+_id: ObjectId('670fc762ea0e8a5534c73c06'), Cust_id: '105',
+Name: 'Bhushan',
+Cust_street: 'Newasa', City: 'Shirdi'
+}
+
+]
+
+practical1> db.Customer.find({City:'Ahilyanagar'}).pretty();
+[
+{
+
+_id: ObjectId('670fc6b2ea0e8a5534c73c02'), Cust_id: '101',
+Name: 'Rohit', Cust_street: 'Rahuri',
+City: 'Ahilyanagar'
+}
+
+]
+
+
+practical1> db.Branch.find({$or:[{Asset:{$gt:'30000'}},{City:'Nagar'}]}).pretty();
+[
+{
+
+_id: ObjectId('670fc57dea0e8a5534c73bfe'), Branch_id: 'state67',
+Branch_name: 'State', Branch_city: 'Nagar',
+ 
+Asset: '889000000'
+},
+
+{
+
+_id: ObjectId('670fc5b0ea0e8a5534c73bff'), Branch_id: 'Badoda99',
+Branch_name: 'Badoda', Branch_city: 'Nashik', Asset: '999000000'
+},
+
+{
+
+_id: ObjectId('670fc60dea0e8a5534c73c01'), Branch_id: 'Maharashtra76', Branch_name: 'Maharashtra', Branch_city: 'Mumbai',
+Asset: '88000000'
+
+}
+]
+
+practical1> db.Branch.find({Asset:{$gt:'3000'},Branch_city:'Nagar'}).pretty(); [
+{
+
+_id: ObjectId('670fc57dea0e8a5534c73bfe'), Branch_id: 'state67',
+Branch_name: 'State', Branch_city: 'Nagar', Asset: '889000000'
+}
+ 
+]
+
+practical1> db.Account.find().sort({Balance:1}).pretty();
+[
+{
+
+_id: ObjectId('670fc443ea0e8a5534c73bfb'), Acc_no: '75449',
+Cust_id: '104', Branch_id: 'ICICI444', Balance: '100000'
+},
+
+{
+
+_id: ObjectId('670fbedeea0e8a5534c73bf9'), Acc_no: '45673',
+Cust_id: '102',
+Branch_id: 'state67', Balance: '779332'
+},
+
+{
+
+_id: ObjectId('670fbe9aea0e8a5534c73bf8'), Acc_no: '10123',
+Cust_id: '101', Branch_id: 'cent10', Balance: '89332'
+},
+
+{
+ 
+_id: ObjectId('670fc469ea0e8a5534c73bfc'), Acc_no: '85833',
+Cust_id: '105',
+
+Branch_id: 'Maharashtra76', Balance: '990000'
+},
+
+{
+
+_id: ObjectId('670fc40fea0e8a5534c73bfa'), Acc_no: '96833',
+Cust_id: '103', Branch_id: 'Badoda99', Balance: '99433400'
+}
+
+]
+
+
+practical1> db.Account.remove({Balance:{$gte:'700000',$lte:'800000'}});
+
+{ acknowledged: true, deletedCount: 1 } practical1> db.Account.find().pretty();
+[
+{
+
+_id: ObjectId('670fbe9aea0e8a5534c73bf8'), Acc_no: '10123',
+Cust_id: '101', Branch_id: 'cent10', Balance: '89332'
+},
+ 
+{
+
+_id: ObjectId('670fc40fea0e8a5534c73bfa'), Acc_no: '96833',
+Cust_id: '103', Branch_id: 'Badoda99', Balance: '99433400'
+},
+
+{
+
+_id: ObjectId('670fc443ea0e8a5534c73bfb'), Acc_no: '75449',
+Cust_id: '104', Branch_id: 'ICICI444', Balance: '100000'
+},
+
+{
+_id: ObjectId('670fc469ea0e8a5534c73bfc'), Acc_no: '85833',
+Cust_id: '105',
+
+Branch_id: 'Maharashtra76',
+Balance: '990000'
+}
+
+]
+
+practical1> db.Customer.distinct('Name',{City:'Ahilyanagar'}); [ 'Swara' ]
+ 
+practical1> db.Customer.update({Name:'Rohan'},{$set:{City:'Mumbai'}});
+
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+
+acknowledged: true, insertedId: null, matchedCount: 1,
+modifiedCount: 1,
+
+upsertedCount: 0
+
+}
+
+
+practical1> db.Customer.find().pretty();
+[
+{
+
+_id: ObjectId('670fc6b2ea0e8a5534c73c02'), Cust_id: '101',
+Name: 'Rohit',
+Cust_street: 'Rahuri', City: 'Ahilyanagar'
+},
+
+{
+
+_id: ObjectId('670fc6ccea0e8a5534c73c03'), Cust_id: '102',
+Name: 'Rohan', Cust_street: 'Katraj', City: 'Mumbai'
+},
+ 
+{
+
+_id: ObjectId('670fc6ecea0e8a5534c73c04'), Cust_id: '103',
+Name: 'Arjun', Cust_street: 'Devgiri', City: 'Nashik'
+},
+
+{
+
+_id: ObjectId('670fc70aea0e8a5534c73c05'), Cust_id: '104',
+Name: 'Dev', Cust_street: 'Sinhgad', City: 'Nagpur'
+},
+
+{
+
+_id: ObjectId('670fc762ea0e8a5534c73c06'), Cust_id: '105',
+Name: 'Bhushan', Cust_street: 'Newasa',
+City: 'Shirdi'
+}
+
+]

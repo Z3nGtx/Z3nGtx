@@ -1,0 +1,67 @@
+# 4. Assignment : Bays Classifier
+# Problem Statement: A SMS unsolicited mail (every now and then known
+as cell smartphone junk
+# mail) is any junk message brought to a cellular phone as textual content messaging via the Short
+# Message Service (SMS). Use probabilistic approach (Naive Bayes Classifier / Bayesian Network)
+# to implement SMS Spam Filtering system. SMS messages are categorized as SPAM or HAM
+# using features like length of message, word depend, unique keywords etc. Download Data -Set
+# from :http://archive.ics.uci.edu/ml/datasets/sms+spam+collection
+# This dataset is composed by just one text file, where each line has the correct class followed by
+# the raw message
+# Apply Machine Learning Algorithm and Evaluate Model 
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+
+# Load the dataset
+df = pd.read_csv("/content/SMSSpamCollection", delimiter="\t", header=None)
+
+# Display the first 10 rows of the dataset
+print(df.head(10))
+
+# Set column names
+df.columns = ["Class_label", "Message"]
+
+# Encode the class labels: 1 for spam and 0 for ham
+df["Class_label"] = df["Class_label"].apply(lambda x: 1 if x == "spam" else 0)
+
+# Split the dataset into training and testing sets
+x_train, x_test, y_train, y_test = train_test_split(
+    df["Message"], df["Class_label"], test_size=0.3, random_state=0
+)
+
+# Initialize and fit the TfidfVectorizer
+vectorizer = TfidfVectorizer()
+vectorizer.fit(df["Message"])
+
+# Display the vocabulary
+print("Vocabulary:", vectorizer.vocabulary_)
+
+# Transform the training and testing data
+new_train_set = vectorizer.transform(x_train)
+new_test_set = vectorizer.transform(x_test)
+
+# Print the shapes of the transformed datasets
+print("Train set shape:", new_train_set.shape)
+print("Test set shape:", new_test_set.shape)
+
+# Initialize and train the Multinomial Naive Bayes classifier
+classifier = MultinomialNB()
+classifier.fit(new_train_set, y_train)
+
+# Calculate and print the classifier accuracy
+accuracy = classifier.score(new_test_set, y_test) * 100
+print("Classifier accuracy: {:.2f}%".format(accuracy))
+
+# Predict on new emails
+email = [
+    "hey Gauri can you get together for lunch",
+    "upto 70% discount on exclusive offer",
+]
+new_email = vectorizer.transform(email)
+predictions = classifier.predict(new_email)
+
+# Display predictions
+print("Predictions for new emails:", predictions)

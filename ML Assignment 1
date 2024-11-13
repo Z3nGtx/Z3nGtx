@@ -12,18 +12,52 @@
 # Precision III. Recall IV. F-1 score
 
 
-import numpy as np import pandas as pd
-
-dataFrame = pd.read_csv("/content/Heart.csv") dataFrame.shape # shape
-dataFrame.info() dataFrame.head() dataFrame.dtypes dataFrame.isnull() dataFrame.isnull().sum() dataFrame.Age.mean()
-count = (dataFrame["Age"] == 0).sum() count
-var = dataFrame.loc[:, ["Age", "Sex", "ChestPain", "RestBP", "Chol"]] var
+import numpy as np
+import pandas as pd
 from sklearn.model_selection import train_test_split
+
+# Load the dataset
+dataFrame = pd.read_csv("/content/Heart.csv")
+
+# Display shape, info, first few rows, and data types
+print("Data Shape:", dataFrame.shape)
+dataFrame.info()
+print(dataFrame.head())
+print("Data Types:\n", dataFrame.dtypes)
+
+# Check for missing values
+print("Missing values:\n", dataFrame.isnull().sum())
+
+# Calculate the mean age
+age_mean = dataFrame["Age"].mean()
+print("Mean Age:", age_mean)
+
+# Count the occurrences where Age is 0 (if applicable)
+age_zero_count = (dataFrame["Age"] == 0).sum()
+print("Count of Age == 0:", age_zero_count)
+
+# Select specific columns for analysis
+var = dataFrame.loc[:, ["Age", "Sex", "ChestPain", "RestBP", "Chol"]]
+print(var.head())
+
+# Split the dataset into training and testing sets
 X_train, X_test = train_test_split(var, test_size=0.25, random_state=42)
-X_train.shape, X_test.shape
- 
-# Find accuracy and precision for given example
-tp=45 fp=55 fn=05 tn=395
-acc=(tp+tn)/(tp+fp+fn+tn) pre=tp/(tp+fp) rec=tp/(tp+fn)
-print("Accuracy is : {}".format(acc)) print("Precision is : {}".format(pre)) print("Recall is : {}".format(rec))
-print("F1-Score is : {}".format((2*pre*rec)/(pre+rec)))
+print("Train Set Shape:", X_train.shape)
+print("Test Set Shape:", X_test.shape)
+
+# Given values for confusion matrix
+tp = 45  # True Positives
+fp = 55  # False Positives
+fn = 5   # False Negatives
+tn = 395 # True Negatives
+
+# Calculate accuracy, precision, recall, and F1-score
+accuracy = (tp + tn) / (tp + fp + fn + tn)
+precision = tp / (tp + fp)
+recall = tp / (tp + fn)
+f1_score = (2 * precision * recall) / (precision + recall)
+
+print("Accuracy is: {:.2f}".format(accuracy))
+print("Precision is: {:.2f}".format(precision))
+print("Recall is: {:.2f}".format(recall))
+print("F1-Score is: {:.2f}".format(f1_score))

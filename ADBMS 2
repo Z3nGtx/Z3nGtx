@@ -1,0 +1,166 @@
+Assignment No: 02
+Code:
+Microsoft Windows [Version 10.0.19045.4894]
+(c) Microsoft Corporation. All rights reserved.
+
+
+C:\Users\Admin>mongosh
+Current Mongosh Log ID: 670fdb4518023bdacfc73bf7 Connecting to:
+mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeout MS=2000&appName=mongosh+2.3.1
+Using MongoDB:	7.0.12
+Using Mongosh:	2.3.1
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+------
+The server generated these startup warnings when booting
+2024-10-15T22:13:41.288+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+test> use practical2; switched to db practical2
+ 
+practical2> db.createCollection('Employee');
+{ ok: 1 } practical2>
+db.Employee.insert({id:101,name:'Swarangi',city:'Pune',post:'Data Analyst',salary:50000});
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+
+acknowledged: true,
+insertedIds: { '0': ObjectId('670fdbca18023bdacfc73bf8') }
+}
+
+practical2> db.Employee.insert({id:102,name:'Chandni',city:'Dhule',post:'Developer',sala ry:30000});
+{
+
+acknowledged: true,
+insertedIds: { '0': ObjectId('670fdbfc18023bdacfc73bf9') }
+}
+
+practical2> db.Employee.insert({id:103,name:'Sanskruti',city:'Nashik',post:'Manager',sal ary:10000});
+{
+
+acknowledged: true,
+ 
+insertedIds: { '0': ObjectId('670fdc3718023bdacfc73bfa') }
+}
+practical2> db.Employee.insert({id:104,name:'Utkarsha',city:'Mumbai',post:'Tester',sala ry:60000});
+{
+
+acknowledged: true,
+insertedIds: { '0': ObjectId('670fdc6e18023bdacfc73bfb') }
+}
+
+practical2> db.Employee.insert({id:105,name:'Mona',city:'Goa',post:'Assistant',salary:40 000});
+{
+
+acknowledged: true,
+insertedIds: { '0': ObjectId('670fdc8d18023bdacfc73bfc') }
+}
+
+
+
+practical2> db.Employee.aggregate([{$project:{id:1,name:1,city:1}}]).pretty();
+[
+
+{
+ 
+_id: ObjectId('670fdbca18023bdacfc73bf8'), id: 101, name: 'Swarangi', city: 'Pune'
+},
+{
+
+_id: ObjectId('670fdbfc18023bdacfc73bf9'), id: 102, name: 'Chandni', city: 'Dhule'
+},
+{
+
+_id: ObjectId('670fdc3718023bdacfc73bfa'), id: 103, name: 'Sanskruti', city: 'Nashik'
+},
+{
+
+_id: ObjectId('670fdc6e18023bdacfc73bfb'), id: 104, name: 'Utkarsha', city: 'Mumbai'
+},
+{
+
+_id: ObjectId('670fdc8d18023bdacfc73bfc'), id: 105, name: 'Mona',
+ 
+city: 'Goa'
+}
+]
+
+practical2> db.Employee.aggregate([{$project:{id:1,salary:1}},{$match:{salary:{$gt:2000 0}}}]).pretty();
+[
+
+{ _id: ObjectId('670fdbca18023bdacfc73bf8'), id: 101, salary: 50000 },
+{ _id: ObjectId('670fdbfc18023bdacfc73bf9'), id: 102, salary: 30000 },
+{ _id: ObjectId('670fdc6e18023bdacfc73bfb'), id: 104, salary: 60000 },
+{ _id: ObjectId('670fdc8d18023bdacfc73bfc'), id: 105, salary: 40000 }
+]
+
+practical2> db.Employee.aggregate([{$match:{city:'Pune'}},{$sort:{name:1}},{$project:{n ame:1}}]).pretty();
+[ { _id: ObjectId('670fdbca18023bdacfc73bf8'), name: 'Swarangi' } ] practical2>
+
+practical2> db.Employee.aggregate([{$limit:3},{$sort:{salary:1}},{$project:{id:1,name:1}}
+]).pretty(); [
+{
+ 
+_id: ObjectId('670fdc3718023bdacfc73bfa'), id: 103,
+name: 'Sanskruti'
+},
+{
+
+_id: ObjectId('670fdbfc18023bdacfc73bf9'), id: 102, name: 'Chandni'
+},
+{
+
+_id: ObjectId('670fdbca18023bdacfc73bf8'), id: 101, name: 'Swarangi'
+}
+]
+
+
+
+practical2> db.Emplyoyee.createIndex({salary:1}); salary_1 practical2> db.Employee.getIndexes();
+[ { v: 2, key: { _id: 1 }, name: '_id_' } ] practical2>
+
+practical2> db.Employee.find({salary:{$gt:20000}}).explain("executionStats")
+ 
+{
+
+explainVersion: '1', queryPlanner: {
+namespace: 'practical2.Employee', indexFilterSet: false, parsedQuery: { salary: { '$gt': 20000 } }, queryHash: '9AF9DEDF', planCacheKey: '9AF9DEDF',
+maxIndexedOrSolutionsReached: false, maxIndexedAndSolutionsReached: false, maxScansToExplodeReached: false, winningPlan: {
+stage: 'COLLSCAN',
+filter: { salary: { '$gt': 20000 } }, direction: 'forward'
+},
+rejectedPlans: []
+},
+executionStats: { executionSuccess: true, nReturned: 4,
+executionTimeMillis: 4,
+totalKeysExamined: 0,
+ 
+totalDocsExamined: 5, executionStages: {
+stage: 'COLLSCAN',
+filter: { salary: { '$gt': 20000 } }, nReturned: 4, executionTimeMillisEstimate: 0, works: 6, advanced: 4,
+needTime: 1, needYield: 0,
+saveState: 0, restoreState: 0, isEOF: 1, direction: 'forward', docsExamined: 5
+}
+},
+
+command: {
+find: 'Employee', filter: { salary: { '$gt': 20000 } }, '$db': 'practical2'
+},
+serverInfo:	{ host: 'Swarangi',
+ 
+port:	27017,
+version: '7.0.12',
+
+gitVersion: 'b6513ce0781db6818e24619e8a461eae90bc94fc'
+},
+serverParameters: { internalQueryFacetBufferSizeBytes: 104857600,
+internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+internalLookupStageIntermediateDocumentMaxSizeBytes: 104857600,
+internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+internalQueryMaxBlockingSortMemoryUsageBytes: 104857600,
+internalQueryProhibitBlockingMergeOnMongoS: 0,
+internalQueryMaxAddToSetBytes: 104857600,
+internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600, internalQueryFrameworkControl: 'trySbeRestricted'
+},
+ok: 1
+}

@@ -1,0 +1,59 @@
+def count_clashes(board):
+    """
+    Count the number of row and diagonal clashes between queens
+    placed on a chessboard represented by the board list.
+    """
+    board_positions = [(board[i], i) for i in range(len(board))]
+    clash_count = 0
+    n = len(board)
+
+    for i in range(n - 1):
+        position_a = board_positions[i]
+        for j in range(i + 1, n):
+            position_b = board_positions[j]
+            # Diagonal clash
+            if abs(position_a[0] - position_b[0]) == abs(position_a[1] - position_b[1]):
+                clash_count += 1
+            # Row clash
+            if position_a[0] == position_b[0]:
+                clash_count += 1
+
+    return clash_count
+
+
+def find_successors(current_position):
+    """
+    Generate all successor positions by moving one queen in any column
+    to another row in the same column.
+    """
+    n = len(current_position)
+    successor_positions = []
+
+    for i in range(n):
+        for j in range(n):
+            if current_position[i] != j:
+                new_position = current_position.copy()
+                new_position[i] = j
+                successor_positions.append(new_position)
+
+    return successor_positions
+
+
+# ---- Main Code ----
+# Ask user for number of queens
+n = int(input("Enter the number of queens (N): "))
+
+# Ask user for initial board position
+# Each index is the column, and value at that index is the row
+print(f"Enter {n} values (row numbers for each column, space-separated):")
+board = list(map(int, input().split()))
+
+if len(board) != n:
+    print("Error: You must enter exactly", n, "values.")
+else:
+    print("\nInitial Board:", board)
+    print("Clashes:", count_clashes(board))
+
+    print("\nSuccessor Positions:")
+    for pos in find_successors(board):
+        print(pos)

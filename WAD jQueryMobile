@@ -1,0 +1,87 @@
+index.html
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Travel Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- jQuery and jQuery Mobile CDN -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+
+<body>
+
+<!-- Page 1: Home -->
+<div data-role="page" id="home">
+
+  <div data-role="header">
+    <h1>Travel Guide</h1>
+  </div>
+
+  <div role="main" class="ui-content">
+    <p>Welcome to your personal Travel Guide App.</p>
+    <a href="#destinations" data-role="button" data-icon="grid">View Destinations</a>
+    <a href="#contact" data-role="button" data-icon="info">Contact Us</a>
+  </div>
+
+  <div data-role="footer">
+    <h4>&copy; 2025 Travel Guide</h4>
+  </div>
+</div>
+
+<!-- Page 2: Destinations -->
+<div data-role="page" id="destinations">
+
+  <div data-role="header">
+    <h1>Top Destinations</h1>
+  </div>
+
+  <div role="main" class="ui-content">
+    <ul data-role="listview" data-inset="true">
+      <li><a href="#">Paris - The City of Lights</a></li>
+      <li><a href="#">Tokyo - Land of the Rising Sun</a></li>
+      <li><a href="#">New York - The Big Apple</a></li>
+      <li><a href="#">Dubai - The City of Gold</a></li>
+    </ul>
+    <a href="#home" data-role="button" data-icon="back" data-direction="reverse">Back to Home</a>
+  </div>
+
+  <div data-role="footer">
+    <h4>Explore the World</h4>
+  </div>
+</div>
+
+<!-- Page 3: Contact -->
+<div data-role="page" id="contact">
+
+  <div data-role="header">
+    <h1>Contact Us</h1>
+  </div>
+
+  <div role="main" class="ui-content">
+    <form>
+      <label for="name">Name:</label>
+      <input type="text" name="name" id="name">
+
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email">
+
+      <label for="msg">Message:</label>
+      <textarea name="msg" id="msg"></textarea>
+
+      <input type="submit" value="Send" data-icon="check">
+    </form>
+    <a href="#home" data-role="button" data-icon="back" data-direction="reverse">Back to Home</a>
+  </div>
+
+  <div data-role="footer">
+    <h4>We'd love to hear from you!</h4>
+  </div>
+</div>
+
+</body>
+</html>
+
+

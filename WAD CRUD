@@ -1,0 +1,148 @@
+1. Terminal Commands to Set Up Project
+
+mkdir node-express-mongo-crud
+cd node-express-mongo-crud
+
+npm init -y
+npm install express mongoose body-parser
+
+
+2. Create and Configure server.js
+
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const Item = require('./models/Item');
+
+const app = express();
+app.use(bodyParser.json());
+
+// MongoDB Connection
+mongoose.connect('mongodb://localhost:27017/crud_api', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch((err) => console.error('MongoDB connection error:', err));
+
+// CREATE
+app.post('/api/items', async (req, res) => {
+  const { name, description, price } = req.body;
+  const newItem = new Item({ name, description, price });
+
+  try {
+    const savedItem = await newItem.save();
+    res.status(201).json(savedItem);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// READ All
+app.get('/api/items', async (req, res) => {
+  try {
+    const items = await Item.find();
+    res.status(200).json(items);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// READ by ID
+app.get('/api/items/:id', async (req, res) => {
+  try {
+    const item = await Item.findById(req.params.id);
+    if (!item) return res.status(404).json({ message: 'Item not found' });
+    res.status(200).json(item);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// UPDATE
+app.put('/api/items/:id', async (req, res) => {
+  try {
+    const updatedItem = await Item.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedItem) return res.status(404).json({ message: 'Item not found' });
+    res.status(200).json(updatedItem);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// DELETE
+app.delete('/api/items/:id', async (req, res) => {
+  try {
+    const deletedItem = await Item.findByIdAndDelete(req.params.id);
+    if (!deletedItem) return res.status(404).json({ message: 'Item not found' });
+    res.status(200).json({ message: 'Item deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Start Server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+
+ 3. Create models/Item.js
+
+mkdir models
+
+const mongoose = require('mongoose');
+
+const itemSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true }
+});
+
+module.exports = mongoose.model('Item', itemSchema);
+
+✅ 4. Run the Project
+Make sure MongoDB is running locally (default port is 27017).
+Then in your terminal:
+node server.js
+You should see:
+
+Connected to MongoDB
+Server running on port 5000
+
+✅ 5. Testing With Postman
+Open Postman and do the following:
+
+a) Create a Collection
+Click Collections → New Collection → Name it (e.g., ItemAPI)
+
+b) POST (Create)
+URL: http://localhost:5000/api/items
+{
+  "name": "OPPO",
+  "description": "Fast and secure phone company",
+  "price": 20000
+}
+Click Send → You’ll get a new item with _id.
+
+c) GET All
+URL: http://localhost:5000/api/items
+
+d) GET by ID
+URL: http://localhost:5000/api/items/<ITEM_ID>
+
+e) PUT (Update)
+URL: http://localhost:5000/api/items/<ITEM_ID>
+
+{
+  "name": "OPPO Reno",
+  "description": "Updated fast phone",
+  "price": 25000
+}
+f) DELETE
+URL: http://localhost:5000/api/items/<ITEM_ID>
+

@@ -1,0 +1,86 @@
+# Dictionaries to hold heuristic values and adjacency list
+H = {}
+adjac_lis = {}
+
+# Input number of cities
+num1 = int(input('NUMBER OF LOCATIONS: '))
+
+for x in range(num1):
+    print()
+    ver1 = input("ENTER THE NAME OF CITY: ")
+    h = int(input(f"ENTER THE h VALUE FOR THE CITY {ver1}: "))
+    H[ver1] = h
+    num2 = int(input(f"ENTER THE NUMBER OF CONNECTED LOCATIONS FROM {ver1}: "))
+    
+    lst = []
+    for y in range(num2):
+        ver2 = input("ENTER THE ADJACENT CITY: ")
+        dist = int(input(f"ENTER THE DISTANCE FROM {ver1} TO {ver2}: "))
+        lst.append((ver2, dist))
+    
+    adjac_lis[ver1] = lst
+
+# Print for verification
+print("\nAdjacency List:", adjac_lis)
+print("Heuristic Values (H):", H)
+
+# Helper function to get neighbors
+def get_neighbors(z):
+    return adjac_lis.get(z, [])
+
+# Heuristic function
+def heuristic(n):
+    return H[n]
+
+# A* Algorithm
+def a_star_algorithm(start, stop):
+    open_list = set([start])
+    closed_list = set()
+
+    G = {start: 0}
+    parent = {start: start}
+
+    while open_list:
+        n = None
+
+        for v in open_list:
+            if n is None or G[v] + heuristic(v) < G[n] + heuristic(n):
+                n = v
+
+        if n is None:
+            print('GIVEN PATH DOES NOT EXIST!!!')
+            return None
+
+        if n == stop:
+            path = []
+            while parent[n] != n:
+                path.append(n)
+                n = parent[n]
+            path.append(start)
+            path.reverse()
+            print('\nGIVEN PATH IS FOUND:', path)
+            return path
+
+        for (m, dist) in get_neighbors(n):
+            if m not in open_list and m not in closed_list:
+                open_list.add(m)
+                parent[m] = n
+                G[m] = G[n] + dist
+            else:
+                if G[m] > G[n] + dist:
+                    G[m] = G[n] + dist
+                    parent[m] = n
+                    if m in closed_list:
+                        closed_list.remove(m)
+                        open_list.add(m)
+
+        open_list.remove(n)
+        closed_list.add(n)
+
+    print('PATH DOES NOT EXIST !!!')
+    return None
+
+# Input for start and goal
+start = input("\nSTART CITY: ")
+goal = input("GOAL CITY: ")
+a_star_algorithm(start, goal)

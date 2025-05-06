@@ -1,0 +1,219 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    RegisterComponent,
+    LoginComponent,
+    ProfileComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+
+const routes: Routes = [
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
+
+
+
+
+<button routerLink="/register">Register</button>
+<button routerLink="/login">Login</button>
+<button routerLink="/profile">Profile</button>
+
+<router-outlet></router-outlet>
+
+
+
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
+})
+export class RegisterComponent {
+  user = { name: '', email: '', password: '' };
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  register() {
+    if (this.authService.register(this.user)) {
+      alert('Registration successful!');
+      this.router.navigate(['/login']);
+    } else {
+      alert('Email already exists!');
+    }
+  }
+}
+
+
+
+
+<h2>Register</h2>
+<form (ngSubmit)="register()">
+  <input type="text" [(ngModel)]="user.name" name="name" placeholder="Name" required />
+  <input type="email" [(ngModel)]="user.email" name="email" placeholder="Email" required />
+  <input type="password" [(ngModel)]="user.password" name="password" placeholder="Password" required />
+  <button type="submit">Register</button>
+</form>
+
+
+
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent {
+  email = '';
+  password = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  login() {
+    if (this.authService.login(this.email, this.password)) {
+      alert('Login successful!');
+      this.router.navigate(['/profile']);
+    } else {
+      alert('Invalid email or password!');
+    }
+  }
+}
+
+
+
+
+<h2>Login</h2>
+<form (ngSubmit)="login()">
+  <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required />
+  <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required />
+  <button type="submit">Login</button>
+</form>
+
+
+
+
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+
+@Component({
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
+})
+export class ProfileComponent {
+  user: any;
+
+  constructor(private authService: AuthService, private router: Router) {
+    this.user = this.authService.getUser();
+    if (!this.user) {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+}
+
+
+
+<h2>Profile</h2>
+<p><strong>Name:</strong> {{ user?.name }}</p>
+<p><strong>Email:</strong> {{ user?.email }}</p>
+<button (click)="logout()">Logout</button>
+
+
+
+
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  constructor(private router: Router) {}
+
+  register(user: { name: string; email: string; password: string }): boolean {
+    const existing = localStorage.getItem('users');
+    const users = existing ? JSON.parse(existing) : [];
+    if (users.find((u: any) => u.email === user.email)) {
+      return false;
+    }
+    users.push(user);
+    localStorage.setItem('users', JSON.stringify(users));
+    return true;
+  }
+
+  login(email: string, password: string): boolean {
+    const stored = localStorage.getItem('users');
+    if (!stored) return false;
+    const users = JSON.parse(stored);
+    const user = users.find((u: any) => u.email === email && u.password === password);
+    if (user) {
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
+      return true;
+    }
+    return false;
+  }
+
+  getUser() {
+    const user = localStorage.getItem('loggedInUser');
+    return user ? JSON.parse(user) : null;
+  }
+
+  logout() {
+    localStorage.removeItem('loggedInUser');
+    this.router.navigate(['/login']);
+  }
+}
+
+
+
+
+

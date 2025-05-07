@@ -100,3 +100,15 @@ void *consumer(void *thread) {
     }
     pthread_exit(0);
 }
+
+
+
+🖊️ Step 1: Number of producers
+
+
+Enter number of producers: 2
+
+🖊️ Step 2: Number of consumers
+
+
+Enter number of consumers: 3

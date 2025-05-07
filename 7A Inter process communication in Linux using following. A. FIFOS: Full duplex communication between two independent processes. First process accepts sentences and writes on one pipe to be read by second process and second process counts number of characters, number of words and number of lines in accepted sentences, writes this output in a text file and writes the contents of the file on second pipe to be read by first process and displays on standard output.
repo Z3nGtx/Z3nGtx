@@ -121,3 +121,58 @@ int main() {
 
     return 0;
 }
+
+ 1. Open Two Terminals
+Open Terminal 1 – will run the Sender program
+
+Open Terminal 2 – will run the Receiver program
+
+✅ 2. Save & Compile Both Files
+In Terminal 1 – Save as sender.c:
+gcc sender.c -o sender
+
+In Terminal 2 – Save as receiver.c:
+gcc receiver.c -o receiver
+
+✅ 3. Run the Programs in Order
+
+🔁 In Terminal 2 (Receiver – runs first, waits for data):
+./receiver
+This will block and wait for input from the sender.
+
+🟢 In Terminal 1 (Sender):
+./sender
+
+It will prompt:
+
+Enter a sentence (type 'exit' to quit):
+
+✅ 4. Input Example (in Sender/Terminal 1):
+
+This is an example sentence
+(Just type and press Enter)
+
+📤 Output
+After sending the sentence, Terminal 1 (Sender) will show:
+
+Output from second process:
+Characters: 29
+Words: 5
+Lines: 0
+
+
+
+W
+
+
+
+
+
+
+
+
+
+
+
+
+

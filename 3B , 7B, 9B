@@ -118,3 +118,27 @@ int main() {
 
     return 0;
 }
+
+✅ What Input to Give
+Let’s go through an example input step-by-step.
+
+🖊️ Step 1: Enter the number of processes
+
+Enter the number of processes: 4
+
+🖊️ Step 2: For each process, enter its arrival time and burst time
+
+Enter the arrival time for process 1: 0
+Enter the burst time for process 1: 5
+
+Enter the arrival time for process 2: 1
+Enter the burst time for process 2: 3
+
+Enter the arrival time for process 3: 2
+Enter the burst time for process 3: 1
+
+Enter the arrival time for process 4: 3
+Enter the burst time for process 4: 2
+
+🖊️ Step 3: Enter the time quantum
+Enter time quantum: 2

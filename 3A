@@ -76,3 +76,25 @@ int main() {
 
     return 0;
 }
+
+
+✅ What Input to Give
+Suppose you have 4 processes. You will input:
+
+1️⃣ Number of processes:
+
+4
+
+2️⃣ Arrival and Burst Time for each process:
+
+Enter arrival time for process 1: 0
+Enter burst time for process 1: 8
+
+Enter arrival time for process 2: 1
+Enter burst time for process 2: 4
+
+Enter arrival time for process 3: 2
+Enter burst time for process 3: 2
+
+Enter arrival time for process 4: 3
+Enter burst time for process 4: 1

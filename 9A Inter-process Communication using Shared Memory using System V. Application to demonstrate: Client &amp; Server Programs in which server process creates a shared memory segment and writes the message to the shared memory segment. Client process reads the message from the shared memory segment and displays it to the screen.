@@ -108,3 +108,30 @@ int main() {
     return 0;
 }
 
+
+Compile the server and client code:
+
+For the server:
+gcc server.c -o server
+
+For the client:
+gcc client.c -o client
+
+Run the server first:
+
+Open the first terminal and run the server:
+./server
+
+Expected Output:
+Writing to shared memory...
+Message written to shared memory: Hello from DVVPCOE, Ahmednagar Server!
+
+Run the client after the server:
+
+Open another terminal window and run the client:
+
+./client
+Expected Output:
+
+Reading from shared memory...
+Message from shared memory: Hello from DVVPCOE, Ahmednagar Server!

@@ -87,3 +87,14 @@ int main() {
 
     return 0;
 }
+
+✅ What Input to Provide
+When prompted, just input:
+
+🖊️ Step 1: Enter number of readers
+
+Enter number of readers: 3
+
+🖊️ Step 2: Enter number of writers
+
+Enter number of writers: 2

@@ -89,3 +89,9 @@ int main() {
 
     return 0;
 }
+
+Enter the number of requests: 8
+Enter the request sequence: 98 183 41 122 14 124 65 67
+Enter the initial head position: 53
+Enter the disk size (last cylinder number): 200
+Enter the direction (1 for high, 0 for low): 1

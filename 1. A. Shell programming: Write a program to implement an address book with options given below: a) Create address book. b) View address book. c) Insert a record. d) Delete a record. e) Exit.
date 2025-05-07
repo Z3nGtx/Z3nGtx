@@ -1,0 +1,103 @@
+#!/bin/bash
+
+# Address Book File
+address_book="address_book.txt"
+
+# Function to create the address book
+create_address_book() {
+    if [ ! -f "$address_book" ]; then
+        touch "$address_book"
+        echo "Address book created successfully."
+    else
+        echo "Address book already exists."
+    fi
+}
+
+# Function to view the address book
+view_address_book() {
+    if [ -f "$address_book" ]; then
+        echo "---- Address Book ----"
+        cat "$address_book"
+        echo "----------------------"
+    else
+        echo "Address book does not exist."
+    fi
+}
+
+# Function to insert a record into the address book
+insert_record() {
+    echo "Enter Name:"
+    read name
+    echo "Enter Phone Number:"
+    read phone
+    echo "Enter Email:"
+    read email
+
+    # Append the new record to the address book file
+    echo "$name,$phone,$email" >> "$address_book"
+    echo "Record added successfully."
+}
+
+# Function to delete a record from the address book
+delete_record() {
+    echo "Enter the Name to delete:"
+    read name_to_delete
+
+    # Check if record exists
+    if grep -q "$name_to_delete" "$address_book"; then
+        # Delete the record
+        sed -i "/$name_to_delete/d" "$address_book"
+        echo "Record for $name_to_delete deleted."
+    else
+        echo "Record not found."
+    fi
+}
+
+# Main menu for the address book
+while true; do
+    echo "---- Address Book Menu ----"
+    echo "1. Create Address Book"
+    echo "2. View Address Book"
+    echo "3. Insert a Record"
+    echo "4. Delete a Record"
+    echo "5. Exit"
+    echo "Please select an option (1-5):"
+    read choice
+
+    case $choice in
+        1)
+            create_address_book
+            ;;
+        2)
+            view_address_book
+            ;;
+        3)
+            insert_record
+            ;;
+        4)
+            delete_record
+            ;;
+        5)
+            echo "Exiting..."
+            exit 0
+            ;;
+        *)
+            echo "Invalid choice. Please try again."
+            ;;
+    esac
+done
+
+
+
+Create a new file (e.g., address_book.sh):
+nano address_book.sh
+Paste the script into the file and save it (CTRL + X, then Y, then Enter).
+
+Make the script executable:
+chmod +x address_book.sh
+
+Run the script:
+./address_book.sh
+
+
+
